@@ -4,7 +4,6 @@
       "src": "mysite/wsgi.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "15mb",
         "runtime": "python3.13.1"
       }
     }
@@ -19,5 +18,7 @@
       "dest": "mysite/wsgi.py"
     }
   ],
-  "buildCommand": "python3 manage.py collectstatic --noinput"
+  "env": {
+    "RUN_COLLECTSTATIC": "true"
+  }
 }
