@@ -19,5 +19,5 @@
       "dest": "mysite/wsgi.py"
     }
   ],
-  "buildCommand": "./vercel-build.sh"
+  "buildCommand": "python3 manage.py collectstatic --noinput"
 }
