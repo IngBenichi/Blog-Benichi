@@ -1,9 +1,19 @@
 {
-  "buildCommand": "python3 manage.py collectstatic --noinput && cp -r staticfiles/* public/",
+  "builds": [
+    {
+      "src": "mysite/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.13.1",
+        "postInstallCommand": "python3 manage.py collectstatic --noinput"
+      }
+    }
+  ],
   "routes": [
     {
-      "src": "^/static/(.*)$",
-      "dest": "public/$1"
+      "src": "/static/(.*)",
+      "dest": "staticfiles/$1"
     },
     {
       "src": "/(.*)",
