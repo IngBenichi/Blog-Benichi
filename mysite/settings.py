@@ -226,12 +226,3 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-
-#>>> from django.core.mail import send_mail
-#>>> send_mail('Prueba Django','Este es el body de mi mensaje','djangobenichi@gmail.com',[])
-#>>>  send_mail('Prueba Django','Este es el body de mi mensaje','djangobenichi@gmail.com',
-#['camiloandresbenitezvaldes@gmail.com'],fail_silently=False) 
-#tiwojop539@morxin.com
-
-#>>> from blog.models import Post
-#>>> Post.objects.filter(title__search='django')
