@@ -1,0 +1,60 @@
+{% comment %} {% extends "blog/base.html" %} {% endcomment %}
+{% load static %}
+
+{% comment %} {% block title %}Crear Cuenta{% endblock %} {% endcomment %}
+
+{% block extra_css %}
+    <link href="{% static 'css/register.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-box">
+        <h2 class="register-title">Crear Cuenta</h2>
+
+        {% if form.errors %}
+        <div class="error-message">
+            <p>Por favor, corrige los siguientes errores:</p>
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ field.errors|striptags }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+
+        <form method="post" action="{% url 'blog:register' %}" class="register-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Correo Electrónico</label>
+                {{ form.email }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Contraseña</label>
+                {{ form.password1 }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Confirmar Contraseña</label>
+                {{ form.password2 }}
+            </div>
+
+            <button type="submit" class="register-button">Registrarse</button>
+        </form>
+
+        <p class="login-link">
+            ¿Ya tienes cuenta? <a href="{% url 'blog:login' %}">Inicia sesión aquí</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

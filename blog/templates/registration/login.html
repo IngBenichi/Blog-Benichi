@@ -1,0 +1,44 @@
+{% comment %} {% extends "blog/base.html" %} {% endcomment %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'css/login_style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2 class="login-title">Iniciar Sesión</h2>
+
+        {% if form.errors %}
+        <div class="error-message">
+            <p>Usuario o contraseña incorrectos.</p>
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'blog:login' %}" class="login-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="login-button">Iniciar Sesión</button>
+        </form>
+
+        <div class="links">
+            <a href="{% url 'blog:password_reset' %}">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <p class="register-link">
+            ¿No tienes cuenta? <a href="{% url 'blog:register' %}">Regístrate aquí</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

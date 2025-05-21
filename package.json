@@ -1,0 +1,20 @@
+{
+  "name": "my-blog-app-django",
+  "version": "1.0.0",
+  "description": "My Blog App es una aplicación web construida con Django que permite a los usuarios interactuar con un blog de manera dinámica. La aplicación ofrece diversas funcionalidades para gestionar publicaciones, comentarios, y más.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./blog/static/css/tailwind.css -o ./blog/static/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./blog/static/css/tailwind.css -o ./blog/static/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "stylelint-config-recommended": "^15.0.0",
+    "tailwindcss": "^3.4.17"
+  }
+}

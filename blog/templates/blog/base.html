@@ -1,0 +1,70 @@
+{% load static %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Benichi's Blog{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+</head>
+
+<body class="bg-neutral-100 text-neutral-900 font-sans min-h-screen">
+    <header class="bg-gray-800 text-black py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            {% comment %} <a href="/" class="text-2xl font-bold text-orange-400">Benichi's Blog</a> {% endcomment %}
+            <div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 text-black px-4 py-2 rounded-lg transition">
+                        Cerrar sesión
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-600 text-black px-4 py-2 rounded-lg transition">
+                        Iniciar sesión
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto max-w-7xl px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <section class="lg:col-span-8">
+            {% block content %}
+            {% endblock %}
+        </section>
+        <aside class="lg:col-span-4 lg:sticky lg:top-8 space-y-6 self-start">
+            <div class="p-6 border border-gray-300">
+                <a href="/" class="inline-block text-2xl font-bold text-primary pb-3 transition-colors hover:text-orange-500">
+                    Benichi's Blog
+                </a>
+                <p class="text-gray-700 text-sm">
+                    This is my blog.
+                    I've written <span class="font-medium text-orange-500">{% total_posts %}</span> posts so far
+                </p>
+            </div>
+            <div class="p-6 border border-gray-300">
+                <h3 class="text-lg font-bold text-secondary mb-4">Últimos Posts</h3>
+                <div class="space-y-3">
+                    {% show_latest_posts 5 %}
+                </div>
+            </div>
+            <div class="p-6 border border-gray-300">
+                <h3 class="text-lg font-bold text-secondary mb-4">Posts más comentados</h3>
+                {% get_most_commented_posts as most_commented_posts %}
+                <ul class="space-y-3">
+                    {% for post in most_commented_posts %}
+                    <li>
+                        <a href="{{ post.get_absolute_url }}"
+                            class="block text-sm text-gray-700 hover:text-orange-600 transition-colors duration-200 py-1 px-2 rounded-lg hover:bg-orange-100">
+                            {{ post.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+    </div>
+</body>
+
+</html>

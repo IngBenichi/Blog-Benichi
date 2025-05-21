@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Cierre de Sesión{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-10">
+    <h2 class="text-2xl font-semibold text-gray-800">Has cerrado sesión</h2>
+    <p class="text-gray-600">Gracias por visitarnos. Esperamos verte pronto.</p>
+    <a href="{% url 'login' %}" class="mt-4 inline-block px-6 py-2 bg-blue-500 text-black rounded-lg hover:bg-blue-600 transition">
+        Iniciar sesión nuevamente
+    </a>
+</div>
+{% endblock %}

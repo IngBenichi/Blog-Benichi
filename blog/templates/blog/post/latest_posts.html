@@ -1,0 +1,10 @@
+<ul class="space-y-2">
+    {% for post in latest_posts %}
+    <li>
+        <a href="{{ post.get_absolute_url }}"
+            class="block text-sm text-gray-700 hover:text-orange-600 transition-colors duration-200 py-1 px-2 rounded-lg hover:bg-orange-100">
+            {{ post.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>

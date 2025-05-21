@@ -1,0 +1,36 @@
+<nav aria-label="Navegación de páginas" class="flex justify-center items-center mt-8">
+    <ul class="flex items-center gap-2">
+        {% if page.has_previous %}
+        <li>
+            <a href="?page={{ page.previous_page_number }}"
+                class="flex items-center px-4 py-2 text-sm font-medium text-neutral-100 bg-primary rounded-lg hover:bg-primary/80 transition-colors"
+                aria-label="Ir a página anterior">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Anterior
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="px-4 py-2 text-sm text-gray-700">
+            <span class="flex items-center gap-1">
+                Página {{ page.number }}
+                de {{ page.paginator.num_pages }}
+            </span>
+        </li>
+
+        {% if page.has_next %}
+        <li>
+            <a href="?page={{ page.next_page_number }}"
+                class="flex items-center px-4 py-2 text-sm font-medium text-neutral-100 bg-primary rounded-lg hover:bg-primary/80 transition-colors"
+                aria-label="Ir a página siguiente">
+                Siguiente
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

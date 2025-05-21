@@ -1,0 +1,87 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-4">
+  <h1 class="text-4xl font-bold text-gray-900">{{ post.title }}</h1>
+  <p class="text-sm text-gray-500 mt-2">
+    Publicado el <span class="font-medium">{{ post.publish }}</span> por <span class="font-medium text-primary">{{ post.author }}</span>
+  </p>
+
+  {% if post.image %}
+    <div class="my-6">
+      <img src="{{ post.image.url  }}" alt="{{ post.title }}" class="rounded-lg shadow max-h-96 w-auto mx-auto">
+    </div>
+  {% endif %}
+
+  <div class="flex items-center gap-8 my-8">
+    <button id="playPostAudio" class="flex items-center gap-2 px-3 py-1 bg-white text-black border border-gray-400 rounded-lg shadow hover:bg-gray-200 transition text-sm font-semibold focus:outline-none">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5l7 7-7 7M5 5v14"/></svg>
+      Escuchar post
+    </button>
+    <button id="stopPostAudio" class="flex items-center gap-2 px-3 py-1 bg-white text-black border border-gray-400 rounded-lg shadow hover:bg-gray-200 transition text-sm font-semibold focus:outline-none">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      Detener
+    </button>
+  </div>
+  <div id="postBodyText" class="prose lg:prose-xl mt-6">{{ post.body|markdown|linebreaks }}</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var playBtn = document.getElementById('playPostAudio');
+      var stopBtn = document.getElementById('stopPostAudio');
+      playBtn.onclick = function() {
+        window.speechSynthesis.cancel();
+        const text = document.getElementById('postBodyText').innerText;
+        const utterance = new window.SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-ES';
+        window.speechSynthesis.speak(utterance);
+      };
+      stopBtn.onclick = function() {
+        window.speechSynthesis.cancel();
+      };
+    });
+  </script>
+
+  <div class="mt-8">
+    <a href="{% url 'blog:post_share' post.id %}" class="text-primary underline hover:text-primary-dark">
+      Compartir este post
+    </a>
+  </div>
+
+  <h2 class="text-2xl font-semibold text-gray-900 mt-10">Posts Similares</h2>
+  <div class="mt-4 space-y-2">
+    {% for post in similar_posts %}
+      <p>
+        <a href="{{ post.get_absolute_url }}" class="text-base text-gray-900/80 hover:underline">{{ post.title }}</a>
+      </p>
+    {% empty %}
+      <p class="text-gray-500">No hay posts similares por ahora.</p>
+    {% endfor %}
+  </div>
+
+  <div class="mt-10">
+    {% with comments.count as total_comments %}
+      <h2 class="text-2xl font-semibold text-primary">
+        {{ total_comments }} comentario{{ total_comments|pluralize }}
+      </h2>
+    {% endwith %}
+    <div class="mt-4 space-y-6">
+      {% for comment in comments %}
+        <div class="p-4 border border-gray-200 rounded-lg">
+          <p class="text-sm text-gray-600">
+            Comentario {{ forloop.counter }} por <span class="font-medium text-primary">{{ comment.name }}</span>, el {{ comment.created }}
+          </p>
+          <p class="mt-2 text-gray-800">{{ comment.body|linebreaks }}</p>
+        </div>
+      {% empty %}
+        <p class="text-gray-500">No hay comentarios aún.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mt-10">
+    {% include "blog/post/includes/comment_form.html" %}
+  </div>
+</div>
+{% endblock %}

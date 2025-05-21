@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    command: gunicorn mysite.wsgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+    ports:
+      - "3000:8000"
+    volumes:
+      - ./static:/app/static
+    env_file:
+      - .env  # Carga las variables de entorno desde el archivo .env
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - default
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    driver: bridge

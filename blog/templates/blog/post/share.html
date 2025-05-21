@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% block title %}Compartir un posts{% endblock %}
+{% block content %}
+{% if sent %}
+<h1>E-mail enviado satisfactoriamente</h1>
+<p>
+    "{{ post.title }}" Se envio correctamente a: {{ form.cleaned_data.to}}.
+</p>
+<a href="{% url 'blog:post_list' %}" class="btn btn-primary">Regresar</a>
+{% else %}
+<div class="mt-4">
+    <h1 class="text-4xl text-gray-900 font-bold mb-4">Compartir "{{ post.title }}" por E-mail</h1>
+    <a href="{% url 'blog:post_list' %}"
+        class="inline-flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-lg cursor-pointer hover:bg-primary/90 focus:outline-none mb-8">
+        <svg class="size-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Regresar
+        al inicio</a>
+
+    <form action="." method="post" class="space-y-4 md:w-4/6">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit"
+            class="px-4 py-2 bg-primary text-white font-semibold rounded-lg cursor-pointer hover:bg-primary/90 focus:outline-none"
+            value="Enviar E-mail">
+    </form>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+<h2 class="text-2xl font-semibold text-gray-900 my-10">Añadir comentarios</h2>
+<form action="{% url 'blog:post_comment' post.id %}" method="post" class="space-y-4 w-full md:w-4/6">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input 
+    type="submit" 
+    value="Enviar" 
+    class="px-4 py-2 bg-primary text-white font-semibold rounded-lg cursor-pointer hover:bg-primary/90 focus:outline-none"
+  >
+</form> 

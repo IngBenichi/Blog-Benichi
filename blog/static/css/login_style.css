@@ -1,0 +1,111 @@
+/* Estilos generales */
+body {
+    background-color: #f3f4f6;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Contenedor del login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Caja del login */
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Título */
+.login-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Mensajes de error */
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Campos del formulario */
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Botón */
+.login-button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-button:hover {
+    background-color: #1e40af;
+}
+
+/* Enlaces */
+.links {
+    margin-top: 1rem;
+}
+
+.links a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Registro */
+.register-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.register-link a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
