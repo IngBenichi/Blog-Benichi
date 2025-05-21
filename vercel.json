@@ -2,7 +2,7 @@
   "buildCommand": "python3 manage.py collectstatic --noinput",
   "routes": [
     {
-      "src": "/static/(.*)",
+      "src": "^/static/(.*)$",
       "dest": "staticfiles/$1"
     },
     {
