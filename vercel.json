@@ -5,11 +5,16 @@
             "use": "@vercel/python",
             "config": {
                 "maxLambdaSize": "15mb",
-                "runtime": "python3.13.1"
+                "runtime": "python3.13.1",
+                "postInstallCommand": "python manage.py collectstatic --noinput"
             }
         }
     ],
     "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "staticfiles/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "mysite/wsgi.py"
