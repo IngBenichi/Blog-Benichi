@@ -50,3 +50,4 @@ npm-debug.log
 # Archivos compilados de CSS/JS
 /static/css/dist/
 /static/js/dist/
+.vercel
