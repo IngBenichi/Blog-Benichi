@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import cloudinary
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,44 +135,69 @@ DATABASES = {
     }
 }
 
+# Detect if running on Vercel (read-only filesystem)
+ON_VERCEL = os.environ.get('VERCEL', False) or os.environ.get('VERCEL_ENV', False)
 
-import os
-
-LOG_DIR = os.path.join(BASE_DIR, 'logs')
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(os.getcwd(), 'logs/django_requests.log'),
-            'formatter': 'verbose',
-            'delay':False,
+if not ON_VERCEL:
+    LOG_DIR = os.path.join(BASE_DIR, 'logs')
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR)
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'INFO',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(os.getcwd(), 'logs/django_requests.log'),
+                'formatter': 'verbose',
+                'delay': False,
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
+            },
         },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+        'formatters': {
+            'verbose': {
+                'format': '[{asctime}] {levelname} {message}',
+                'style': '{',
+            },
         },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[{asctime}] {levelname} {message}',
-            'style': '{',
+        'loggers': {
+            'django': {
+                'handlers': ['file', 'console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
         },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
+    }
+else:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
+            },
         },
-    },
-}
+        'formatters': {
+            'verbose': {
+                'format': '[{asctime}] {levelname} {message}',
+                'style': '{',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['console'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+        },
+    }
 
 
 
